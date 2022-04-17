@@ -1,2 +1,35 @@
-sfnmfmnsmansfnsmfmn
+create database Store;
+
+Create table countries (code INT PRIMARY KEY,name VARCHAR(20) unique,continent_name VARCHAR(20) NOT NULL);
+
+Create table users (id INT PRIMARY KEY,full_name VARCHAR(20) ,email VARCHAR(20) unique, gender char(1) CHECK (gender='M' OR gender='F')
+,date_of_birth VARCHAR(15),created_at datetime default CURRENT_TIMESTAMP ,country_code int,FOREIGN KEY (country_code) REFERENCES countries(code));
+
+
+Create table orders (id INT PRIMARY KEY,user_id INT,status VARCHAR(6) CHECK (status='start' OR status='finish'), created_at datetime default CURRENT_TIMESTAMP,FOREIGN KEY (user_id) REFERENCES users(id));
+
+
+Create table products (id INT PRIMARY KEY,name VARCHAR(10) NOT NULL ,price  INT default 0,status varchar(10) CHECK (status='valid' OR status='expired'),created_at datetime default CURRENT_TIMESTAMP);
+
+Create table order_products (order_id INT ,product_id  INT,CONSTRAINT order_product_pk PRIMARY KEY (order_id, product_id),
+	CONSTRAINT FK_order_id 
+      FOREIGN KEY (order_id) REFERENCES orders (id),
+  CONSTRAINT FK_product_id 
+      FOREIGN KEY (product_id) REFERENCES products (id),
+quantity INT default 0);
+
+
+
+insert into countries values (1,'Abdullah','Programming');
+insert into users values (2,'Abdullah','Alanazi@gmail.com','M','7-2-1999','2021-02-02',1);
+insert into products values (3,'Abdullah',4000,'valid','2021-02-02');
+insert into orders values (4,2,'start','2021-02-02');
+insert into order_products values (4,3,20);
+insert into products values (5,'Mohammed',4000,'valid','2021-02-02');
+
+
+
+
+update countries set name ='Mohammed' where code =1;
+delete from products where id =5;
 
